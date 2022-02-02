@@ -1,8 +1,18 @@
 [
-  null,
+  4,
   {
-    "title": "Anotha' one!",
-    "text": "Yup. Another note!",
-    "id": null
+    "title": "Test Test Test",
+    "text": "Why",
+    "id": 1
+  },
+  {
+    "title": "TESSSSSST",
+    "text": "Seems like it work now",
+    "id": 2
+  },
+  {
+    "title": "Ok. Another test now.",
+    "text": "Does it still let me look at my past notes?",
+    "id": 3
   }
 ]

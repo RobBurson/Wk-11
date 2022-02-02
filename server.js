@@ -1,18 +1,19 @@
+const express = require('express');
 const PORT = process.env.PORT || 3001;
 const fs = require('fs');
 const path = require('path');
 
-const express = require('express');
+
 const app = express();
 
-const allNotes = require('./db/db.json');
+const allMyNotes = require('./db/db.json');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
 app.get('/api/notes', (req, res) => {
-    res.json(allNotes.slice(1));
+    res.json(allMyNotes.slice(1));
 });
 
 app.get('/', (req, res) => {
@@ -27,8 +28,8 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
-function createNewNote(body, notesArray) {
-    const newNote = body;
+function createMyNewNote(body, notesArray) {
+    const myNewNote = body;
     if (!Array.isArray(notesArray))
         notesArray = [];
     
@@ -38,20 +39,20 @@ function createNewNote(body, notesArray) {
     body.id = notesArray[0];
     notesArray[0]++;
 
-    notesArray.push(newNote);
+    notesArray.push(myNewNote);
     fs.writeFileSync(
         path.join(__dirname, './db/db.json'),
         JSON.stringify(notesArray, null, 2)
     );
-    return newNote;
+    return myNewNote;
 }
 
 app.post('/api/notes', (req, res) => {
-    const newNote = createNewNote(req.body, allNotes);
+    const newNote = createMyNewNote(req.body, allMyNotes);
     res.json(newNote);
 });
 
-function deleteNote(id, notesArray) {
+function removeNote(id, notesArray) {
     for (let i = 0; i < notesArray.length; i++) {
         let note = notesArray[i];
 
@@ -68,10 +69,10 @@ function deleteNote(id, notesArray) {
 }
 
 app.delete('/api/notes/:id', (req, res) => {
-    deleteNote(req.params.id, allNotes);
+    removeNote(req.params.id, allMyNotes);
     res.json(true);
 });
 
 app.listen(PORT, () => {
-    console.log(`API server now on port ${PORT}!`);
+    console.log(`🌈 Server is now available at localhost:${PORT}! 👂`);
 });
